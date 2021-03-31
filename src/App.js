@@ -4,7 +4,7 @@ import EXCHANGEAPP from './comps/exchangeapp';
 
 function App() {
   return (
-    <div  >
+    <div className="skin" >
 <EXCHANGEAPP/>
     </div>
   );

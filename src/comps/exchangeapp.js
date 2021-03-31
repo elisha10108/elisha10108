@@ -54,19 +54,36 @@ function EXCHANGEAPP(props) {
         temp = val1;
         _setval1(val2);
         setval2(temp);
+        _setval([val1])
+        setval([val2])
 
     }
-
+    const onrefresh=()=>{
+        _setval(["ILS","USD",  "EUR", "BTC", "THB"])
+        setval(["USD", "ILS", "EUR", "BTC", "THB"])
+    }
 
     return (
    
        
         <div className=" p-2 skin " >
+            form:
             <Input _val={_val} val1={val1}  _setval1={_setval1} setvalue={setvalue} />
-            
+            to:
             <Inputi val2={val2} val={val}  setval2={setval2} />
-            <button onClick={onchang}/>
-
+            <div className="d-flex">
+            <div className="p-2 border">
+            to change the select:
+            <br/>
+            <i onClick={onchang} class="fa fa-random" aria-hidden="true"></i>
+            <br/>
+            </div>
+            <div className="p-2 border">
+                to refresh the select:    
+                <br/>
+            <i onClick={onrefresh} class="fa fa-refresh" aria-hidden="true"></i>
+            </div>
+            </div>
             <div >the sum is: <div className="border w-25 mx-auto">{sum.toFixed(4)}</div> 
                 </div>
             
