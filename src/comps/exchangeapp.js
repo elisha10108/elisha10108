@@ -1,94 +1,70 @@
 import React, { useEffect, useState } from 'react';
 import Input from './input ';
-import Inputi from './inputi';
+import Select from './select';
+import data_ar from './money';
 
-// import Score from './score';
 
 function EXCHANGEAPP(props) {
     let [value, setvalue] = useState(1);
     let [sum, setsum] = useState(1);
 
+    let formApi=["USD", "ILS", "EUR", "BTC", "THB"];
 
-    let [_val, _setval] = useState(["ILS","USD",  "EUR", "BTC", "THB"]);
-    let [val1, _setval1] = useState("ILS");
+    let [var1Index,setvar1Index] =useState (1);
+    let [var2Index,setvar2Index] =useState (0);
+
+    let [myAryy, _setval] = useState(["USD", "ILS", "EUR", "BTC", "THB"]);
+    let [valForm, setValForm] = useState("ILS");
+    let [valTo, setval2] = useState("USD");
 
 
-    let [val, setval] = useState(["USD", "ILS", "EUR", "BTC", "THB"]);
-    let [val2, setval2] = useState("USD");
 
     useEffect(() => {
-
         doapi();
-    }, [val1, val2, value]);
+    }, [var1Index,var2Index,value]);
 
 
-    const doapi = async () => {
-        let url1 = "http://apilayer.net/api/live?access_key=27557e5d5e5adab1929a4c284272c032&currencies=" + val1;
-        let resp1 = await fetch(url1);
-        let data1 = await resp1.json();
-        let infoUrl1 = data1.quotes[Object.keys(data1.quotes)[0]];
+    const doapi = () => {
+        let var1 = formApi.findIndex((coin1) => {
+            return coin1 === valForm
+        })
+        let var2 = formApi.findIndex((coin2) => {
+            return coin2 === valTo
+        })
 
-
-        let url2 = "http://apilayer.net/api/live?access_key=27557e5d5e5adab1929a4c284272c032&currencies=" + val2;
-        let resp2 = await fetch(url2)
-        let data2 = await resp2.json()
-        let infoUrl2 = data2.quotes[Object.keys(data2.quotes)[0]];
-
-
-        console.log(infoUrl1)
-        console.log("---")
-        console.log(infoUrl2)
-        console.log("-------")
-  
-
-        if ( infoUrl2>infoUrl1 ) {
-            setsum ( ( infoUrl2 /infoUrl1 )*value) ;
-        } else {
-            setsum(( infoUrl2 / infoUrl1)*value) ;
-
-        }
+        let price1 = data_ar.quotes[Object.keys(data_ar.quotes)[var1]]
+        let price2 = data_ar.quotes[Object.keys(data_ar.quotes)[var2]]
+        setsum((price2 / price1) * value);
 
     }
-    const onchang=()=>{
-        let temp;
-        temp = val1;
-        _setval1(val2);
-        setval2(temp);
-        _setval([val1])
-        setval([val2])
 
-    }
-    const onrefresh=()=>{
-        _setval(["ILS","USD",  "EUR", "BTC", "THB"])
-        setval(["USD", "ILS", "EUR", "BTC", "THB"])
-    }
+    const onchang = () => {
+        let temp = valForm;
+        setValForm(valTo)
+        setval2(temp)
+        
+        let var2temp = var2Index;
+        setvar2Index(var1Index)
+        setvar1Index(var2temp)
+}
 
     return (
-   
-       
         <div className=" p-2 skin " >
             form:
-            <Input _val={_val} val1={val1}  _setval1={_setval1} setvalue={setvalue} />
+            <Input setvar1Index={setvar1Index} var1Index={var1Index} myAryy={myAryy} setValForm={setValForm} myValue={value} setvalue={setvalue} />
             to:
-            <Inputi val2={val2} val={val}  setval2={setval2} />
-            <div className="d-flex">
-            <div className="p-2 border">
-            to change the select:
-            <br/>
-            <i onClick={onchang} class="fa fa-random" aria-hidden="true"></i>
-            <br/>
+            <Select setvar2Index={setvar2Index} var2Index={var2Index}  myAryy={myAryy} setval2={setval2} />
+
+            <div className="mx-auto pt-1">
+                <i onClick={onchang} className="fa fa-random" aria-hidden="true"></i>
             </div>
-            <div className="p-2 border">
-                to refresh the select:    
-                <br/>
-            <i onClick={onrefresh} class="fa fa-refresh" aria-hidden="true"></i>
-            </div>
-            </div>
-            <div >the sum is: <div className="border w-25 mx-auto">{sum.toFixed(4)}</div> 
-                </div>
-            
+
+            <div >the sum is: <span>{sum.toFixed(5)}</span> </div>
+
+
         </div>
-       
+
+
     )
 }
 

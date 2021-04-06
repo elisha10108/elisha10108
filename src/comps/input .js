@@ -1,34 +1,33 @@
-import React, { useEffect }  from 'react';
+import React  from 'react';
 
 function Input(props){
 
  
 const handleChange=(event)=> {
 
-props._setval1(event.target.value)
+props.setValForm(event.target.value)
 
+let  var1Index = props.myAryy.findIndex((coin1) => {
+  return coin1 === event.target.value
+})
+props.setvar1Index(var1Index)
   }
-const wantTochange=(e)=>{
+const valuChange=(e)=>{
     props.setvalue(e.target.value)
 }
-useEffect(() => {
-    console.log("k")
-
-}, [props.val1]);
 
 
     return (
       <div>
       <form >
         <label>
-        
-          <select  onClickCapture={(e)=>handleChange(e)}>
-             {props._val.map((item,i )=> {
-                      return  <option  key={i} value={item}>{item}</option>
+          <select onChange={(e)=>handleChange(e)} value = {props.myAryy[props.var1Index]}>
+             {props.myAryy.map((item,i )=> {
+                return  <option  key={i} value={item}>{item}</option>
             })}
           </select>
         </label>
-        <input type="number" onInput={wantTochange} />
+        <input defaultValue={props.myValue} type="number" onInput={valuChange} />
       </form>
 </div>
     );
@@ -36,5 +35,4 @@ useEffect(() => {
 
 
 }
-  
     export default Input
