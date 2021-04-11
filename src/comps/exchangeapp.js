@@ -18,15 +18,13 @@ function EXCHANGEAPP(props) {
     let [valTo, setval2] = useState("USD");
 
 
-
     useEffect(() => {
         doapi();
     }, [var1Index,var2Index,value]);
 
-
     const doapi = () => {
         let var1 = formApi.findIndex((coin1) => {
-            return coin1 === valForm
+            return coin1 === valFormז
         })
         let var2 = formApi.findIndex((coin2) => {
             return coin2 === valTo
