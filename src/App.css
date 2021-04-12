@@ -30,3 +30,15 @@ body {
   }
 
 }
+.inputVal{
+  height: 26px;
+ border: none;
+  border-bottom: rgb(12, 2, 15)  solid 2px;
+  cursor:text
+}
+.theSum{
+  background: rgb(255, 255, 255);
+  color: rgb(56, 39, 69);
+
+
+}

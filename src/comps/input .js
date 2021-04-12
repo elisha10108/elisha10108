@@ -27,7 +27,7 @@ const valuChange=(e)=>{
             })}
           </select>
         </label>
-        <input defaultValue={props.myValue} type="number" onInput={valuChange} />
+        <input className=" inputVal" defaultValue={props.myValue} type="number" onInput={valuChange} />
       </form>
 </div>
     );
